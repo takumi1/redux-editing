@@ -5,9 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 1rem 2.5rem;
+  display: flex;
+  justify-content: center;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+button {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+form {
+  display: flex;
+}
+input {
+  margin-right: 1em;
+}
+.closeButton {
+font-size: 1em;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+.wrapper {
+  display: flex;
+
 }
