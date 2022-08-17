@@ -1,5 +1,6 @@
 import {nanoid} from "nanoid";
-import {ADD_SERVICE, REMOVE_SERVICE, UPD_VALUE} from "../actions/serviceActions";
+import {ADD_SERVICE, FIND_NAME, REMOVE_SERVICE, UPD_VALUE} from "../actions/serviceActions";
+
 
 const initialState = [
     {
@@ -13,10 +14,15 @@ const initialState = [
         price: 2000
     }
 ]
-export default function serviceReducer(state = initialState, action) {
+
+export default function ServiceReducer(state = initialState, action) {
+
+
+
     switch (action.type) {
         case ADD_SERVICE:
             const {name, price} = action.payload
+
             return [
                 ...state,
                 {
@@ -45,8 +51,10 @@ export default function serviceReducer(state = initialState, action) {
             )
             return newState;
 
-        default:
+         default:
             return state;
 
     }
+
+
 }

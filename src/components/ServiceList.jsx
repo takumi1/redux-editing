@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {EDIT_SERVICE, GET_DEFAULT, REMOVE_SERVICE} from "../actions/serviceActions";
 
@@ -8,7 +8,10 @@ const getDefault = () => ({
 })
 
 const ServiceList = () => {
+    const searchBar = React.useRef(null);
     const items = useSelector((state) => state.services);
+    const [state, setState] = useState(items)
+
     const dispatch = useDispatch();
 
     const handleRemove = id => {
@@ -19,6 +22,7 @@ const ServiceList = () => {
             }
         });
         dispatch(getDefault());
+        searchBar.current.value = ' '
     }
     const handleEdit = (id, name, price) => {
         dispatch({
@@ -29,25 +33,46 @@ const ServiceList = () => {
                 price,
             }
         })
+        searchBar.current.value = ' '
     }
+
+    const handleChange = event => {
+
+        const {target: {value}} = event;
+
+        let state = items.filter(i => {
+
+            return i.name.includes(value)
+
+        });
+        setState(state)
+
+
+    }
+
+    useEffect(() => {
+        setState(items)
+    }, [items]);
 
     return (
         <>
             <h1>Service list</h1>
-        <ul>
-            {
-                items.map(item => (
-                    <li key={item.id}>
-                        {`${item.name} ${item.price}`}
+            <input type="text" onChange={handleChange} ref={searchBar} placeholder='Sort by name'/>
+            <ul>
 
-                        <button onClick={()=> handleEdit(item.id, item.name, item.price)}>✎</button>
+                {state ?
+                    state.map(item => (
+                        <li key={item.id}>
+                            {`${item.name} ${item.price}`}
 
-                    <button className='closeButton' onClick={()=> handleRemove(item.id)}>x</button>
+                            <button onClick={() => handleEdit(item.id, item.name, item.price)}>✎</button>
 
-                    </li>
-                ))
-            }
-        </ul>
+                            <button className='closeButton' onClick={() => handleRemove(item.id)}>x</button>
+
+                        </li>
+                    )) : handleRemove()
+                }
+            </ul>
         </>
     );
 };

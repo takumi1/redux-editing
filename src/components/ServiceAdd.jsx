@@ -40,6 +40,7 @@ export default function ServiceAdd() {
         serviceForm.editing ? dispatch(updateValue(serviceForm)) : dispatch(addService(serviceForm));
         setServiceForm(defaultServiceForm)
         dispatch(getDefault());
+
     }
 
     useEffect(() => {
